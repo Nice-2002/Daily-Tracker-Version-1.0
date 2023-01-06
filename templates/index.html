@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <title>index page</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Tracker List</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                {% if tracker | length > 0 %}
+                <table id = "all-trackers" class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">SNo</th>
+                            <th scope="col">Tracker Name</th>
+                            <th scope="col">Tracker Type</th>
+                            <th scope="col">Tracker Question</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    {% for track in tracker %}
+                    <tr>
+                        <td scope="row">{{ loop.index }}</td>
+                        <td ><a href="/tracker/{{track['tracker_id']}}">{{ track["tracker_name"] }}</a></td>
+                        <td>{{track["tracker_type"]}}</td>
+                        <td>{{track["tracker_question"]}}</td>
+                        <td>
+                            <a href="/tracker/{{track['tracker_id']}}/log" type="button"  class="btn btn-primary">Log</a>
+                            <a href="/tracker/{{track['tracker_id']}}/update" type="button"  class="btn btn-primary">Update</a>
+                            <a href="/tracker/{{ track['tracker_id']}}/delete" type="button"  class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <br><br>  
+                </table>
+                <a href="/tracker/create" type="button" class="btn btn-primary">+Add Tracker</a>
+                {% else %}
+                    <h3><strong>No Trackers found. Add the Trackers now!</strong></h3>
+                    <br>
+                    <a href="/tracker/create" type="button" class="btn btn-primary">+Add Tracker</a>
+                {% endif %}
+            </div>
+            <div class ="col-md-4">
+                {% include 'side_bar.html' %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

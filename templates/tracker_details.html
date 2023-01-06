@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <title>index page</title>
+</head>
+<body>
+    <header class="p-5 text-center">
+        <h1 class="mb-3">Tracker details related to {{tracker['tracker_name']}}</h1>
+        <br/>
+        <br/>
+    </header>
+    <div class="container">
+        {% if logs | length > 0 %}
+        <table id = "all-logs" class="table">
+            <h4><strong>Tracker Question: <i>{{tracker['tracker_question']}}</i></strong></h4>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">SNo</th>
+                    <th scope="col">Logging Date</th>
+                    <th scope="col">Logging time</th> 
+                    <th scope="col">Tracker Value</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            {% for log in logs %}
+            <tr>
+                <td scope="row">{{ loop.index }}</td>
+                <td>{{log["timestamp"].strftime('%d-%m-%Y')}}</td>
+                <td>{{log["timestamp"].strftime('%H-%m-%s')}}</td>
+                <td>{{log["log_value"]}}</td>
+                <td>
+                    <a href="/logger/{{tracker['tracker_id']}}/update/{{log['log_id']}}" type="button"  class="btn btn-primary">Update</a>
+                    <a href="/logger/{{tracker['tracker_id']}}/delete/{{log['log_id']}}" type="button"  class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            <br><br>
+        </table>
+        <br>
+        <div>
+            <a href="/tracker/{{tracker['tracker_id']}}/log" type="button" class="btn btn-primary">Log</a>
+            <a href="/" type="button" class="btn btn-secondary">Go Home</a>
+        </div>
+        <br>
+        {% if tracker.tracker_type == 'number' %}
+        <img src="/static/my_plot.png"/>
+        {% endif %}
+        {% else %}
+            <h3>There are no log information related to this tracker.</h3>
+            <h3>Add values now!</h3>
+            <br>
+            <div>
+                <a href="/tracker/{{tracker['tracker_id']}}/log" type="button" class="btn btn-primary">Log</a>
+                <a href="/" type="button" class="btn btn-secondary">Go Home</a>
+            </div>
+            
+        {% endif %}
+    </div>
+</body>
+</html>

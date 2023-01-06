@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <title>Log into trackerr</title>
+</head>
+<body>
+    <header class="p-5 text-center">
+        <h1 class="mb-3">Update log into {{tracker['tracker_name']}} Tracker</h1>
+    </header>
+    <div class="container">
+        <form action="/logger/{{tracker['tracker_id']}}/update/{{log['log_id']}}" method="POST" id="log-into-tracker-form">
+            <div class="form-group">
+                <label for="TrackerQuestion">Tracker Question: {{tracker['tracker_question']}}</label>
+                <br><br>
+                <p><strong>Current tracker value is {{log['log_value']}}.</strong></p>
+                {% if tracker['tracker_type'] == 'boolean' %}
+                <div class="form-group">
+                    <br><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="input_val" id="inlineRadio1" value="True">
+                        <label class="form-check-label" for="interger">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="input_val" id="inlineRadio1" value="False">
+                        <label class="form-check-label" for="boolean">No</label>
+                    </div>
+                </div>
+                <small class="form-text text-muted">Choose one option.</small>
+                {% else %}
+                <input type="{{tracker['tracker_type']}}" name="input_val" class="form-control" placeholder="{{tracker['tracker_type']}}" required />
+                <small class="form-text text-muted">Enter the tracker value.</small>
+                {% endif %}
+                <br><br>
+            </div>
+            <br><br>
+            <div>
+                <input type="submit" class="btn btn-success" value = "Submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

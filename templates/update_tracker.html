@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}"/>
+    <title>Log into trackerr</title>
+</head>
+<body>
+    <header class="p-5 text-center">
+        <h1 class="mb-3">Update Tracker {{tracker['tracker_name']}}</h1>
+    </header>
+    <div class="container">
+        <form action="/tracker/{{tracker['tracker_id']}}/update" method="POST" id="create-tracker-form">
+            <div class="form-group">
+                <p><strong>Current tracker Name: {{tracker['tracker_name']}}</strong> </p>
+                <label for="TrackerName">Tracker Name:</label>
+                <input type="text" name="tracker_name" class="form-control" placeholder="e.g. Run" required />
+                <small class="form-text text-muted">Enter the tracker name.</small>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <p><strong>Current tracker Question: {{tracker['tracker_question']}}</strong></p>
+                <label for="TrackerQuestion">Tracker Question:</label>
+                <input type="text" name="tracker_question" class="form-control" placeholder="e.g. How many miles did you ran today?" required />
+                <small class="form-text text-muted">Enter the tracker question.</small>
+            </div>
+            <br><br>
+            <div class="form-group">
+                <label for="TrackerType">Tracker Type:</label>
+                <br><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="track_type" id="inlineRadio1" value="number">
+                    <label class="form-check-label" for="interger">Numeric</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="track_type" id="inlineRadio1" value="boolean">
+                    <label class="form-check-label" for="boolean">Boolean</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="track_type" id="inlineRadio1" value="text">
+                    <label class="form-check-label" for="text">Text</label>
+                </div>
+            </div>
+            <br><br>
+            <div>
+                <input type="submit" class="btn btn-success" value = "Submit">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
